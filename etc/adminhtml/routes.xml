@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright © 2025 MageStack. All rights reserved.
+ ~ See COPYING.txt for license details.
+ ~
+ ~ DISCLAIMER
+ ~
+ ~ Do not make any kind of changes to this file if you 
+ ~ wish to upgrade this extension to newer version in the future.
+ ~
+ ~ @category  MageStack
+ ~ @package   MageStack_Core
+ ~ @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
+ ~ @copyright 2025 MageStack
+ ~ @license   https://opensource.org/licenses/MIT  MIT License
+ ~ @link      https://github.com/attherateof/LogstashWrapper
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="logstash" frontName="logstash">
+            <module name="MageStack_LogstashWrapper" />
+        </route>
+    </router>
+</config>

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright © 2025 MageStack. All rights reserved.
+ ~ See COPYING.txt for license details.
+ ~
+ ~ DISCLAIMER
+ ~
+ ~ Do not make any kind of changes to this file if you 
+ ~ wish to upgrade this extension to newer version in the future.
+ ~
+ ~ @category  MageStack
+ ~ @package   MageStack_Core
+ ~ @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
+ ~ @copyright 2025 MageStack
+ ~ @license   https://opensource.org/licenses/MIT  MIT License
+ ~ @link      https://github.com/attherateof/LogstashWrapper
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MageStack\LogstashWrapper\Api\ConfigInterface" type="MageStack\LogstashWrapper\Model\Config" />
+    <type name="MageStack\LogstashWrapper\Logger\DefaultKeysProcessor">
+        <arguments>
+            <argument name="context" xsi:type="array">
+                <item name="message" xsi:type="string"></item>
+                <item name="stack_trace" xsi:type="string"></item>
+                <item name="request" xsi:type="string"></item>
+                <item name="response" xsi:type="string"></item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Monolog\Logger">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="default_keys" xsi:type="object">MageStack\LogstashWrapper\Logger\DefaultKeysProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="MageStack\LogstashWrapper\Model\OpenSearch\SearchService"
+        type="MageStack\Core\Model\OpenSearch\SearchService">
+        <arguments>
+            <argument name="index" xsi:type="string">magento2-log-*</argument>
+            <argument name="map" xsi:type="array">
+                <item name="entity_id" xsi:type="array">
+                    <item name="field" xsi:type="string">_id</item>
+                    <item name="data_type" xsi:type="string">keyword</item>
+                    <item name="query_type" xsi:type="string">term</item>
+                </item>
+                <item name="timestamp" xsi:type="array">
+                    <item name="field" xsi:type="string">@timestamp</item>
+                    <item name="data_type" xsi:type="string">date</item>
+                    <item name="query_type" xsi:type="string">range</item>
+                </item>
+                <item name="level" xsi:type="array">
+                    <item name="field" xsi:type="string">level</item>
+                    <item name="data_type" xsi:type="string">keyword</item>
+                    <item name="query_type" xsi:type="string">term</item>
+                </item>
+                <item name="channel" xsi:type="array">
+                    <item name="field" xsi:type="string">channel</item>
+                    <item name="data_type" xsi:type="string">keyword</item>
+                    <item name="query_type" xsi:type="string">term</item>
+                </item>
+                <item name="message" xsi:type="array">
+                    <item name="field" xsi:type="string">message</item>
+                    <item name="data_type" xsi:type="string">text</item>
+                    <item name="query_type" xsi:type="string">match</item>
+                </item>
+                <item name="path" xsi:type="array">
+                    <item name="field" xsi:type="string">log.file.path</item>
+                    <item name="data_type" xsi:type="string">keyword</item>
+                    <item name="query_type" xsi:type="string">wildcard</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="MageStack\LogstashWrapper\Model\OpenSearch\DataProvider">
+        <arguments>
+            <argument name="searchService" xsi:type="object">
+                MageStack\LogstashWrapper\Model\OpenSearch\SearchService
+            </argument>
+        </arguments>
+    </type>
+</config>

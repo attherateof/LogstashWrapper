@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * Copyright © 2025 MageStack. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * DISCLAIMER
+ *
+ * Do not make any kind of changes to this file if you
+ * wish to upgrade this extension to newer version in the future.
+ *
+ * @category  MageStack
+ * @package   MageStack_Core
+ * @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
+ * @copyright 2025 MageStack
+ * @license   https://opensource.org/licenses/MIT  MIT License
+ * @link      https://github.com/attherateof/LogstashWrapper
+ */
+
+use MageStack\LogstashWrapper\Block\Adminhtml\System\Config\Export;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Export $block
+ * @var Escaper $escaper
+ */
+?>
+
+<div id="magstack_logstash_export" data-bind="scope:'magstack_logstash_export_conf'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#magstack_logstash_export": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "magstack_logstash_export_conf": {
+                        "component": "MageStack_LogstashWrapper/js/view/logstash/configuration/export",
+                        "url": "<?= $escaper->escapeJs($block->getExportUrl()) ?>",
+                        "form_key": "<?= $escaper->escapeJs($block->getFormKey()) ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

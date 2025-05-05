@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright © 2025 MageStack. All rights reserved.
+ ~ See COPYING.txt for license details.
+ ~
+ ~ DISCLAIMER
+ ~
+ ~ Do not make any kind of changes to this file if you 
+ ~ wish to upgrade this extension to newer version in the future.
+ ~
+ ~ @category  MageStack
+ ~ @package   MageStack_Core
+ ~ @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
+ ~ @copyright 2025 MageStack
+ ~ @license   https://opensource.org/licenses/MIT  MIT License
+ ~ @link      https://github.com/attherateof/LogstashWrapper
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="MageStack_Core::core">
+                    <resource id="MageStack_LogstashWrapper::view" 
+                    title="Mage Stack Logstash" translate="title" sortOrder="900"/>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                             <resource id="MageStack_Core::config">
+                                <resource id="MageStack_LogstashWrapper::Logstash" 
+                                title="Logstash" translate="title" sortOrder="900"/>
+                             </resource>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

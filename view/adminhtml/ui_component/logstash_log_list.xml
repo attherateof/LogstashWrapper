@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright © 2025 MageStack. All rights reserved.
+ ~ See COPYING.txt for license details.
+ ~
+ ~ DISCLAIMER
+ ~
+ ~ Do not make any kind of changes to this file if you 
+ ~ wish to upgrade this extension to newer version in the future.
+ ~
+ ~ @category  MageStack
+ ~ @package   MageStack_Core
+ ~ @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
+ ~ @copyright 2025 MageStack
+ ~ @license   https://opensource.org/licenses/MIT  MIT License
+ ~ @link      https://github.com/attherateof/LogstashWrapper
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+         name="logstash_log_list">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">logstash_log_list.logstash_log_list_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <statefull />
+        <spinner>logstash_columns</spinner>
+        <deps>
+            <dep>logstash_log_list.logstash_log_list_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="logstash_log_list_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>MageStack_LogstashWrapper::view</aclResource>
+        <dataProvider name="logstash_log_list_data_source" 
+            class="MageStack\LogstashWrapper\Model\OpenSearch\DataProvider">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks" />
+        <filters name="listing_filters" />
+        <filterSearch name="fulltext"/>
+        <paging name="listing_paging" />
+    </listingToolbar>
+
+    <columns name="logstash_columns">
+        <settings>
+            <childDefaults>
+                <param name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">logstash_log_list.listing_top.bookmarks</item>
+                    <item name="root" xsi:type="string">columns.${ $.index }</item>
+                    <item name="namespace" xsi:type="string">current.${ $.storageConfig.root }</item>
+                </param>
+            </childDefaults>
+            <storageConfig>
+                <namespace>current</namespace>
+                <provider>logstash_log_list.listing_top.bookmarks</provider>
+            </storageConfig>
+        </settings>
+
+        <selectionsColumn name="ids" sortOrder="10">
+            <settings>
+                <indexField>entity_id</indexField>
+                <visible>false</visible>
+            </settings>
+        </selectionsColumn>
+
+        <column name="entity_id" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="timestamp" class="Magento\Ui\Component\Listing\Columns\Date" sortOrder="30">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Logging Time</label>
+                <timezone>false</timezone>
+            </settings>
+        </column>
+
+        <column name="path" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Path</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="level" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Level</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="channel" sortOrder="60">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Channel</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="message" sortOrder="70">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Message</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>
+

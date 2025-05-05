@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright © 2025 MageStack. All rights reserved.
+ ~ See COPYING.txt for license details.
+ ~
+ ~ DISCLAIMER
+ ~
+ ~ Do not make any kind of changes to this file if you 
+ ~ wish to upgrade this extension to newer version in the future.
+ ~
+ ~ @category  MageStack
+ ~ @package   MageStack_Core
+ ~ @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
+ ~ @copyright 2025 MageStack
+ ~ @license   https://opensource.org/licenses/MIT  MIT License
+ ~ @link      https://github.com/attherateof/LogstashWrapper
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section 
+        id="mage_stack" 
+        translate="label" 
+        type="text" 
+        sortOrder="10" 
+        showInDefault="1" 
+        showInWebsite="1" 
+        showInStore="1">
+            <class>separator-top</class>
+            <label>Logstash</label>
+            <tab>mage_stack_tab</tab>
+            <resource>MageStack_LogstashWrapper::Logstash</resource>
+            <group 
+            id="general" 
+            translate="label" 
+            type="text" 
+            sortOrder="10" 
+            showInDefault="1" 
+            showInWebsite="0" 
+            showInStore="0">
+                <label>General</label>
+                <field 
+                id="log_levels" 
+                translate="label" 
+                type="multiselect" 
+                showInDefault="1" 
+                canRestore="1" 
+                sortOrder="30">
+                    <label>Allowed levels</label>
+                    <comment>Select log levels to synchronize with OpenSearch</comment>
+                    <source_model>MageStack\LogstashWrapper\Model\Config\Source\LogLevels</source_model>
+                </field>
+                <field 
+                id="rotation" 
+                translate="label" 
+                type="select" 
+                showInDefault="1" 
+                canRestore="1" 
+                sortOrder="40">
+                    <label>Log rotation option</label>
+                    <comment>Select log levels to synchronize with OpenSearch</comment>
+                    <source_model>MageStack\LogstashWrapper\Model\Config\Source\RotationOption</source_model>
+                </field>
+                <field 
+                id="export" 
+                translate="label" 
+                sortOrder="50" 
+                showInDefault="1" 
+                showInWebsite="0" 
+                showInStore="0">
+                    <label>Export Logstash config</label>
+                    <frontend_model>MageStack\LogstashWrapper\Block\Adminhtml\System\Config\Export</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
