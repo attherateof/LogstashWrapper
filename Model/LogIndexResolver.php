@@ -23,6 +23,7 @@ namespace MageStack\LogstashWrapper\Model;
 
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use MageStack\LogstashWrapper\Api\ConfigInterface;
+use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
 
 /**
  * Class LogIndexResolver
@@ -34,6 +35,8 @@ use MageStack\LogstashWrapper\Api\ConfigInterface;
  */
 class LogIndexResolver
 {
+    public const LOG_INDEX = 'log';
+
     /**
      * @var string|null
      */
@@ -42,10 +45,12 @@ class LogIndexResolver
     /**
      * @param TimezoneInterface $timezone
      * @param ConfigInterface   $config
+     * @param OpenSearchConfig $openSearchConfig
      */
     public function __construct(
         private readonly TimezoneInterface $timezone,
-        private readonly ConfigInterface $config
+        private readonly ConfigInterface $config,
+        private readonly OpenSearchConfig $openSearchConfig,
     ) {
     }
 
@@ -61,7 +66,7 @@ class LogIndexResolver
         }
 
         $rotationFormat = $this->config->getRotationFormat(); // e.g., 'YYYY.MM' or 'YYYY.MM.dd'
-        $indexPrefix = $this->config->getIndexPrefix();       // e.g., 'magento2-log'
+        $indexPrefix = $this->openSearchConfig->getIndexPrefix() . '-' . self::LOG_INDEX;       // e.g., 'magento2-log'
 
         // Convert Logstash-style format to PHP date format
         $phpDateFormat = strtr(
@@ -87,6 +92,7 @@ class LogIndexResolver
      */
     public function getFormat(): string
     {
-        return '"' . $this->config->getIndexPrefix() . '-%{+' . $this->config->getRotationFormat() . '}"';
+        return '"' . $this->openSearchConfig->getIndexPrefix() .
+            '-' . self::LOG_INDEX . '-%{+' . $this->config->getRotationFormat() . '}"';
     }
 }

@@ -54,7 +54,7 @@ class TemplateRenderer
         input {
             file {
                 path => "%s"
-                start_position => "beginning"
+                # start_position => "beginning" # Uncomment for testing or development purpose only
                 codec => multiline {
                     pattern => "^\[.*\]"
                     negate => true

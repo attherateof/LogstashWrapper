@@ -33,13 +33,6 @@ namespace MageStack\LogstashWrapper\Api;
 interface ConfigInterface
 {
     /**
-     * Get OpenSearch index name.
-     *
-     * @return string
-     */
-    public function getIndexPrefix(): string;
-
-    /**
      * Get log levels setting.
      *
      * @return array<string>
@@ -52,39 +45,4 @@ interface ConfigInterface
      * @return string
      */
     public function getRotationFormat(): string;
-
-    /**
-     * Get opensearch host.
-     *
-     * @return string
-     */
-    public function getOpensearchHost(): string;
-
-    /**
-     * Get opensearch port.
-     *
-     * @return string
-     */
-    public function getOpensearchPort(): string;
-
-    /**
-     * Check if Opensearch auth is enabled.
-     *
-     * @return bool
-     */
-    public function isOpensearchAuthEnabled(): bool;
-
-    /**
-     * Get Opensearch user name.
-     *
-     * @return string|null
-     */
-    public function getOpenSearhUserName(): ?string;
-
-    /**
-     * Get Opensearch password.
-     *
-     * @return string|null
-     */
-    public function getOpenSearhPassword(): ?string;
 }

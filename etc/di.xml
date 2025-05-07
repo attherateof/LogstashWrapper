@@ -38,7 +38,7 @@
     <virtualType name="MageStack\LogstashWrapper\Model\OpenSearch\SearchService"
         type="MageStack\Core\Model\OpenSearch\SearchService">
         <arguments>
-            <argument name="index" xsi:type="string">magento2-log-*</argument>
+            <argument name="index" xsi:type="string">-log-*</argument>
             <argument name="map" xsi:type="array">
                 <item name="entity_id" xsi:type="array">
                     <item name="field" xsi:type="string">_id</item>

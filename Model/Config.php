@@ -37,14 +37,8 @@ class Config implements ConfigInterface
     /**
      * Configuration paths
      */
-    public const INDEX = 'catalog/search/opensearch_index_prefix';
     public const LOG_LEVELS = 'mage_stack/general/log_levels';
     public const ROTATION = 'mage_stack/general/rotation';
-    public const OPENSEARCH_HOST = 'catalog/search/opensearch_server_hostname';
-    public const OPENSEARCH_PORT = 'catalog/search/opensearch_server_port';
-    public const OPENSEARCH_ENABLE_AUTH = 'catalog/search/opensearch_enable_auth';
-    public const OPENSEARCH_USER_NAME = 'catalog/search/opensearch_username';
-    public const OPENSEARCH_PASSWORD = 'catalog/search/opensearch_password';
 
     /**
      * constructor
@@ -54,17 +48,6 @@ class Config implements ConfigInterface
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig
     ) {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIndexPrefix(): string
-    {
-        return $this->scopeConfig->getValue(
-            self::INDEX,
-            ScopeInterface::SCOPE_STORE
-        ) . '-log';
     }
 
     /**
@@ -95,68 +78,5 @@ class Config implements ConfigInterface
         );
 
         return is_string($rotation) ? $rotation : '';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getOpensearchHost(): string
-    {
-        $host = $this->scopeConfig->getValue(
-            self::OPENSEARCH_HOST,
-            ScopeInterface::SCOPE_STORE
-        );
-
-        return is_string($host) ? $host : '';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getOpensearchPort(): string
-    {
-        $port = $this->scopeConfig->getValue(
-            self::OPENSEARCH_PORT,
-            ScopeInterface::SCOPE_STORE
-        );
-
-        return is_string($port) ? $port : '';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isOpensearchAuthEnabled(): bool
-    {
-        return $this->scopeConfig->isSetFlag(
-            self::OPENSEARCH_ENABLE_AUTH,
-            ScopeInterface::SCOPE_STORE
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getOpenSearhUserName(): ?string
-    {
-        $user = $this->scopeConfig->getValue(
-            self::OPENSEARCH_USER_NAME,
-            ScopeInterface::SCOPE_STORE
-        );
-
-        return is_string($user) ? $user : null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getOpenSearhPassword(): ?string
-    {
-        $pasword = $this->scopeConfig->getValue(
-            self::OPENSEARCH_PASSWORD,
-            ScopeInterface::SCOPE_STORE
-        );
-
-        return is_string($pasword) ? $pasword : null;
     }
 }

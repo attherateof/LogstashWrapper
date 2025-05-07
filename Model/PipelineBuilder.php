@@ -27,6 +27,7 @@ use Magento\Framework\Exception\FileSystemException;
 use MageStack\LogstashWrapper\Api\ConfigInterface;
 use MageStack\LogstashWrapper\Model\Pipeline\LogLevelFormatter;
 use MageStack\LogstashWrapper\Model\Pipeline\TemplateRenderer;
+use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
 
 /**
  * Class PipelineBuilder
@@ -41,6 +42,7 @@ class PipelineBuilder
      * Constructor
      *
      * @param ConfigInterface   $scopeConfig
+     * @param OpenSearchConfig  $openSearchConfig
      * @param DirectoryList     $directoryList
      * @param State             $state
      * @param LogIndexResolver  $logIndexResolver
@@ -49,6 +51,7 @@ class PipelineBuilder
      */
     public function __construct(
         private readonly ConfigInterface $scopeConfig,
+        private readonly OpenSearchConfig $openSearchConfig,
         private readonly DirectoryList $directoryList,
         private readonly State $state,
         private readonly LogIndexResolver $logIndexResolver,
@@ -65,8 +68,8 @@ class PipelineBuilder
      */
     public function build(): string
     {
-        $host = $this->normalizeHost($this->scopeConfig->getOpensearchHost());
-        $port = $this->scopeConfig->getOpensearchPort();
+        $host = $this->normalizeHost($this->openSearchConfig->getOpensearchHost());
+        $port = $this->openSearchConfig->getOpensearchPort();
         $baseUrl = "{$host}:{$port}";
 
         $useSsl = str_starts_with($host, 'https://');
@@ -79,12 +82,12 @@ class PipelineBuilder
             'ssl_certificate_verification' => $validateCert ? 'true' : 'false',
         ];
 
-        if ($this->scopeConfig->isOpensearchAuthEnabled()) {
-            $user = $this->scopeConfig->getOpenSearhUserName();
+        if ($this->openSearchConfig->isOpensearchAuthEnabled()) {
+            $user = $this->openSearchConfig->getOpenSearhUserName();
             if ($user) {
                 $options['user'] = '"' . $user . '"';
             }
-            $pass = $this->scopeConfig->getOpenSearhPassword();
+            $pass = $this->openSearchConfig->getOpenSearhPassword();
             if ($pass) {
                 $options['password'] = '"' . $pass . '"';
             }
