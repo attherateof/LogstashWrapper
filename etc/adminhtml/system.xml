@@ -58,7 +58,7 @@
                 canRestore="1" 
                 sortOrder="40">
                     <label>Log rotation option</label>
-                    <comment>Select log levels to synchronize with OpenSearch</comment>
+                    <comment>Select option for log rotation monthly or daily</comment>
                     <source_model>MageStack\LogstashWrapper\Model\Config\Source\RotationOption</source_model>
                 </field>
                 <field 
