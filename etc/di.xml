@@ -31,7 +31,9 @@
     <type name="Monolog\Logger">
         <arguments>
             <argument name="processors" xsi:type="array">
-                <item name="default_keys" xsi:type="object">MageStack\LogstashWrapper\Logger\DefaultKeysProcessor</item>
+                <item name="default_keys" xsi:type="object">
+                    MageStack\LogstashWrapper\Logger\DefaultKeysProcessor
+                </item>
             </argument>
         </arguments>
     </type>
@@ -45,7 +47,9 @@
     <!-- pass logIndexResolver to pipeline builder -->
     <type name="MageStack\LogstashWrapper\Model\PipelineBuilder">
         <arguments>
-            <argument name="logIndexResolver" xsi:type="object">MageStack\LogstashWrapper\Model\LogIndexResolver</argument>
+            <argument name="logIndexResolver" xsi:type="object">
+                MageStack\LogstashWrapper\Model\LogIndexResolver
+            </argument>
         </arguments>
     </type>
     <!-- set index name and fields to search to the search service -->

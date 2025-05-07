@@ -113,7 +113,7 @@ class LogIndexResolver implements IndexResolverInterface
      *
      * @return string
      */
-    private function getIndexStaticPart() : string 
+    private function getIndexStaticPart() : string
     {
         return $this->getPrefix() . '-' . $this->index;
     }
