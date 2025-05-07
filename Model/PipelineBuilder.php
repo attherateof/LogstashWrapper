@@ -28,6 +28,8 @@ use MageStack\LogstashWrapper\Api\ConfigInterface;
 use MageStack\LogstashWrapper\Model\Pipeline\LogLevelFormatter;
 use MageStack\LogstashWrapper\Model\Pipeline\TemplateRenderer;
 use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
+use MageStack\Core\Api\OpenSearch\IndexResolverInterface;
+use MageStack\LogstashWrapper\Model\LogIndexResolver;
 
 /**
  * Class PipelineBuilder
@@ -54,7 +56,7 @@ class PipelineBuilder
         private readonly OpenSearchConfig $openSearchConfig,
         private readonly DirectoryList $directoryList,
         private readonly State $state,
-        private readonly LogIndexResolver $logIndexResolver,
+        private readonly IndexResolverInterface $logIndexResolver,
         private readonly TemplateRenderer $templateRenderer,
         private readonly LogLevelFormatter $logLevelFormatter
     ) {
@@ -75,9 +77,12 @@ class PipelineBuilder
         $useSsl = str_starts_with($host, 'https://');
         $validateCert = $useSsl && $this->isProductionMode();
 
+        /** @var LogIndexResolver $indexResolver */
+        $indexResolver = $this->logIndexResolver;
+
         $options = [
             'hosts' => '["' . $baseUrl . '"]',
-            'index' => $this->logIndexResolver->getFormat(),
+            'index' => $indexResolver->getFormat(),
             'ssl' => $useSsl ? 'true' : 'false',
             'ssl_certificate_verification' => $validateCert ? 'true' : 'false',
         ];

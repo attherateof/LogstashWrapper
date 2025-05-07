@@ -35,10 +35,27 @@
             </argument>
         </arguments>
     </type>
+    <!-- add index name to index resolver -->
+    <type name="MageStack\LogstashWrapper\Model\LogIndexResolver">
+        <arguments>
+            <!-- The index name must set without the prefix -->
+            <argument name="index" xsi:type="string">log</argument>
+        </arguments>
+    </type>
+    <!-- pass logIndexResolver to pipeline builder -->
+    <type name="MageStack\LogstashWrapper\Model\PipelineBuilder">
+        <arguments>
+            <argument name="logIndexResolver" xsi:type="object">MageStack\LogstashWrapper\Model\LogIndexResolver</argument>
+        </arguments>
+    </type>
+    <!-- set index name and fields to search to the search service -->
     <virtualType name="MageStack\LogstashWrapper\Model\OpenSearch\SearchService"
         type="MageStack\Core\Model\OpenSearch\SearchService">
         <arguments>
-            <argument name="index" xsi:type="string">-log-*</argument>
+            <argument name="index" xsi:type="array">
+                <item name="class" xsi:type="object">MageStack\LogstashWrapper\Model\LogIndexResolver</item>
+                <item name="method" xsi:type="string">getIndexPattern</item>
+            </argument>
             <argument name="map" xsi:type="array">
                 <item name="entity_id" xsi:type="array">
                     <item name="field" xsi:type="string">_id</item>
@@ -73,6 +90,7 @@
             </argument>
         </arguments>
     </virtualType>
+    <!-- add virtual search service to the data provider -->
     <type name="MageStack\LogstashWrapper\Model\OpenSearch\DataProvider">
         <arguments>
             <argument name="searchService" xsi:type="object">

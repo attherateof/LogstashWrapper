@@ -24,6 +24,7 @@ namespace MageStack\LogstashWrapper\Model;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use MageStack\LogstashWrapper\Api\ConfigInterface;
 use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
+use MageStack\Core\Api\OpenSearch\IndexResolverInterface;
 
 /**
  * Class LogIndexResolver
@@ -33,10 +34,8 @@ use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
  *
  * package MageStack\LogstashWrapper\Model
  */
-class LogIndexResolver
+class LogIndexResolver implements IndexResolverInterface
 {
-    public const LOG_INDEX = 'log';
-
     /**
      * @var string|null
      */
@@ -51,22 +50,28 @@ class LogIndexResolver
         private readonly TimezoneInterface $timezone,
         private readonly ConfigInterface $config,
         private readonly OpenSearchConfig $openSearchConfig,
+        private readonly string $index = ''
     ) {
     }
 
     /**
-     * Get the resolved log index name.
-     *
-     * @return string
+     * @inheritDoc
      */
-    public function get(): string
+    public function getPrefix(): string
+    {
+        return $this->openSearchConfig->getIndexPrefix();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIndex(): string
     {
         if ($this->resolvedLogIndex !== null) {
             return $this->resolvedLogIndex;
         }
 
-        $rotationFormat = $this->config->getRotationFormat(); // e.g., 'YYYY.MM' or 'YYYY.MM.dd'
-        $indexPrefix = $this->openSearchConfig->getIndexPrefix() . '-' . self::LOG_INDEX;       // e.g., 'magento2-log'
+        $rotationFormat = $this->config->getRotationFormat();
 
         // Convert Logstash-style format to PHP date format
         $phpDateFormat = strtr(
@@ -80,9 +85,17 @@ class LogIndexResolver
 
         $datePart = $this->timezone->date()->format($phpDateFormat);
 
-        $this->resolvedLogIndex = sprintf('%s-%s', $indexPrefix, $datePart);
+        $this->resolvedLogIndex = sprintf('%s-%s', $this->getIndexStaticPart(), $datePart);
 
         return $this->resolvedLogIndex;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIndexPattern(): string
+    {
+        return $this->getIndexStaticPart() . '-*';
     }
 
     /**
@@ -92,7 +105,16 @@ class LogIndexResolver
      */
     public function getFormat(): string
     {
-        return '"' . $this->openSearchConfig->getIndexPrefix() .
-            '-' . self::LOG_INDEX . '-%{+' . $this->config->getRotationFormat() . '}"';
+        return '"' . $this->getIndexStaticPart() . '-%{+' . $this->config->getRotationFormat() . '}"';
+    }
+
+    /**
+     * Get the index static part for the log index.
+     *
+     * @return string
+     */
+    private function getIndexStaticPart() : string 
+    {
+        return $this->getPrefix() . '-' . $this->index;
     }
 }
