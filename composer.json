@@ -3,7 +3,7 @@
     "description": "Magento 2 module for Logstash wrapper",
     "type": "magento2-module",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "Amit Biswas",
