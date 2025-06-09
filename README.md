@@ -8,6 +8,8 @@ MageStack_LogstashWrapper is a Magento 2 module designed to streamline the integ
 - Logstash
 - MageStack Core module
     ``composer require mage-stack/module-core``
+- MageStack Opensearch module
+    ``composer require mage-stack/module-opensearch``
 
 ## Module version
 - 1.0.0
