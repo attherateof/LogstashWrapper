@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace MageStack\LogstashWrapper\Model\OpenSearch;
 
-use MageStack\Core\Model\OpenSearch\DataProvider as MageStackDataProvider;
+use MageStack\Opensearch\Model\DataProvider as MageStackDataProvider;
 
 /**
  * Data provider for OpenSearch

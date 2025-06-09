@@ -23,8 +23,8 @@ namespace MageStack\LogstashWrapper\Model;
 
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use MageStack\LogstashWrapper\Api\ConfigInterface;
-use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
-use MageStack\Core\Api\OpenSearch\IndexResolverInterface;
+use MageStack\Opensearch\Api\ConfigInterface as OpenSearchConfig;
+use MageStack\Opensearch\Api\IndexResolverInterface;
 
 /**
  * Class LogIndexResolver
@@ -43,7 +43,7 @@ class LogIndexResolver implements IndexResolverInterface
 
     /**
      * @param TimezoneInterface $timezone
-     * @param ConfigInterface   $config
+     * @param ConfigInterface $config
      * @param OpenSearchConfig $openSearchConfig
      */
     public function __construct(
@@ -78,8 +78,8 @@ class LogIndexResolver implements IndexResolverInterface
             $rotationFormat,
             [
                 'YYYY' => 'Y',
-                'MM'   => 'm',
-                'dd'   => 'd',
+                'MM' => 'm',
+                'dd' => 'd',
             ]
         );
 
@@ -113,7 +113,7 @@ class LogIndexResolver implements IndexResolverInterface
      *
      * @return string
      */
-    private function getIndexStaticPart() : string
+    private function getIndexStaticPart(): string
     {
         return $this->getPrefix() . '-' . $this->index;
     }

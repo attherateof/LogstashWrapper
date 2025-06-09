@@ -14,7 +14,8 @@
     "prefer-stable": true,
     "require": {
         "magento/framework": "103.0.8",
-        "mage-stack/module-core": "1.0.1"
+        "mage-stack/module-core": "1.0.2",
+        "mage-stack/module-opensearch": "1.0.0"
     },
     "autoload": {
         "files": [

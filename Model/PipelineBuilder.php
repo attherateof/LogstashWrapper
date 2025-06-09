@@ -27,8 +27,8 @@ use Magento\Framework\Exception\FileSystemException;
 use MageStack\LogstashWrapper\Api\ConfigInterface;
 use MageStack\LogstashWrapper\Model\Pipeline\LogLevelFormatter;
 use MageStack\LogstashWrapper\Model\Pipeline\TemplateRenderer;
-use MageStack\Core\Api\OpenSearch\ConfigInterface as OpenSearchConfig;
-use MageStack\Core\Api\OpenSearch\IndexResolverInterface;
+use MageStack\OpenSearch\Api\ConfigInterface as OpenSearchConfig;
+use MageStack\OpenSearch\Api\IndexResolverInterface;
 use MageStack\LogstashWrapper\Model\LogIndexResolver;
 
 /**

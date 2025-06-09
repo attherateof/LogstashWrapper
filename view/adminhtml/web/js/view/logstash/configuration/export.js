@@ -4,16 +4,17 @@
  *
  * DISCLAIMER
  *
- * Do not make any kind of changes to this file if you 
+ * Do not make any kind of changes to this file if you
  * wish to upgrade this extension to newer version in the future.
  *
  * @category  MageStack
- * @package   MageStack_Core
+ * @package   MageStack_LogstashWrapper
  * @author    Amit Biswas <amit.biswas.webdeveloper@gmail.com>
  * @copyright 2025 MageStack
  * @license   https://opensource.org/licenses/MIT  MIT License
  * @link      https://github.com/attherateof/LogstashWrapper
-*/
+ */
+
 define(
     [
     'uiComponent',

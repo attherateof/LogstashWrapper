@@ -42,7 +42,7 @@ class LogLevelFormatter
     /**
      * Format the log levels for Logstash config.
      *
-     * @param array<int|string, mixed> $values
+     * @param array<int|string, mixed> $values The values to format.
      *
      * @return string
      */
@@ -56,7 +56,7 @@ class LogLevelFormatter
     /**
      * Get the labels for the log levels.
      *
-     * @param array<int|string, mixed> $values
+     * @param array<int|string, mixed> $values The values to get Labels.
      *
      * @return array<int|string, mixed>
      */

@@ -37,8 +37,8 @@ class Config implements ConfigInterface
     /**
      * Configuration paths
      */
-    public const LOG_LEVELS = 'mage_stack/general/log_levels';
-    public const ROTATION = 'mage_stack/general/rotation';
+    public const LOG_LEVELS = 'logstash/general/log_levels';
+    public const ROTATION = 'logstash/general/rotation';
 
     /**
      * constructor
